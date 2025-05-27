@@ -12,11 +12,15 @@ public class TimeManager : Singleton<TimeManager>
     }
 
     [Header("Time Settings")]
-    public int startYear = 2024;
+    public int startYear = 1956;
     public int startMonth = 1;
     public int startDay = 1;
     public int startHour = 6;
     public int startMinute = 0;
+    
+    [Header("Night Settings")]
+    public int nightStartHour = 21;
+    public int nightEndHour = 6;    
 
     public float secondsPerGameMinute = 0.1f; // 0.1 seconds = 1 game minute (in real time)
 
@@ -81,5 +85,12 @@ public class TimeManager : Singleton<TimeManager>
     public string GetFormattedTime()
     {
         return _currentDateTime.ToString("HH:mm dd.MM.yyyy");
+    }
+    
+    public bool IsNight()
+    {
+        int hour = _currentDateTime.Hour;
+        // Gece saatleri akşam 20'den sabah 6'ya kadar (örnek)
+        return (hour >= nightStartHour || hour < nightEndHour);
     }
 }
