@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 0702c64a67b164845ba2d516461d4983
+guid: ae4c0fe820e8ef44d9257b065b8a2684
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5733113668930443585
-    second: fishing_wheel_indicator_0
+      213: -358781752368361067
+    second: fishing_button_spin_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -49,8 +49,8 @@ TextureImporter:
   spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 9
-  spritePivot: {x: 0.5, y: 0.11}
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: fishing_wheel_indicator_0
+      name: fishing_button_spin_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 2
-        width: 44
-        height: 259
+        y: 1
+        width: 459
+        height: 218
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fb6e6725e73ef60b0800000000000000
-      internalID: -5733113668930443585
+      spriteID: 591113aa5e9550bf0800000000000000
+      internalID: -358781752368361067
       vertices: []
       indices: 
       edges: []
@@ -126,7 +126,7 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    internalID: 0
     vertices: []
     indices: 
     edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      fishing_wheel_indicator_0: -5733113668930443585
+      fishing_button_spin_0: -358781752368361067
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -29,13 +29,11 @@ public class TimeManager : Singleton<TimeManager>
     private float _speedMultiplier = 1f;
     private TimeSpeed _currentSpeed = TimeSpeed.Normal;
 
-    void Start()
-    {
-        _currentDateTime = new DateTime(startYear, startMonth, startDay, startHour, startMinute, 0);
-        UpdateSpeedMultiplier();
-    }
+    public bool isNight;
+    public Action NewDayStarted;
+    public Action NewNightStarted;
 
-    private void OnCharacterCreated()
+    void Start()
     {
         _currentDateTime = new DateTime(startYear, startMonth, startDay, startHour, startMinute, 0);
         UpdateSpeedMultiplier();
@@ -52,6 +50,17 @@ public class TimeManager : Singleton<TimeManager>
         {
             _minuteTimer -= secondsPerGameMinute;
             AdvanceMinute();
+        }
+        
+        if (IsNowNight() && !isNight)
+        {
+            isNight = true;
+            NewNightStarted?.Invoke();
+        }
+        else if (!IsNowNight() && isNight)
+        {
+            isNight = false;
+            NewDayStarted?.Invoke();
         }
     }
 
@@ -87,10 +96,9 @@ public class TimeManager : Singleton<TimeManager>
         return _currentDateTime.ToString("HH:mm dd.MM.yyyy");
     }
     
-    public bool IsNight()
+    private bool IsNowNight()
     {
         int hour = _currentDateTime.Hour;
-        // Gece saatleri akşam 20'den sabah 6'ya kadar (örnek)
         return (hour >= nightStartHour || hour < nightEndHour);
     }
 }

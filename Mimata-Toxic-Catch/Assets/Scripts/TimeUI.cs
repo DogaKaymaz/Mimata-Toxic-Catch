@@ -13,6 +13,22 @@ public class TimeUI : MonoBehaviour
 
     [SerializeField] private Image night;
 
+    private void Start()
+    {
+        timeManager.NewDayStarted += OnNewDayStarted;
+        timeManager.NewNightStarted += OnNewNightStarted;
+    }
+
+    private void OnNewNightStarted()
+    {
+        night.enabled = true;
+    }
+
+    private void OnNewDayStarted()
+    {
+        night.enabled = false;
+    }
+
     private void Update()
     {
         if (timeManager != null && dateText != null && timeText != null)
@@ -21,15 +37,6 @@ public class TimeUI : MonoBehaviour
             dayText.SetText(currentTime.DayOfWeek.ToString());
             timeText.SetText(currentTime.ToString("HH:mm"));
             dateText.SetText(currentTime.ToString("dd.MM.yyyy"));
-
-            if (timeManager.IsNight() && !night.enabled)
-            {
-                night.enabled = true;
-            }
-            else if (!timeManager.IsNight() && night.enabled)
-            {
-                night.enabled = false;
-            }
         }
     }
 }
