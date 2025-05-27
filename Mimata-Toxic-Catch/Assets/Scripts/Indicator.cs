@@ -1,3 +1,6 @@
+using System;
+using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,8 +13,41 @@ public class Indicator : MonoBehaviour
     private float _startAngle = 0f;
     private float _currentAngle = 0f;
     
-    [SerializeField] private Button catchButton;
-    [SerializeField] private Button spinButton;
+    public Button catchButton;
+    public Button spinButton;
+
+    [SerializeField] private TextMeshProUGUI catchInfoText;
+
+    private void Start()
+    {
+        CharacterBehaviour.Instance.BaitCountChanged += OnBaitCountChanged;
+        catchInfoText.SetText("");
+    }
+
+    public void SetCatchInfoText(string info)
+    {
+        catchInfoText.SetText("Your catch is " + info);
+    }
+    
+    public IEnumerator Timer()
+    {
+        yield return new WaitForSeconds(4);
+
+        catchInfoText.SetText("");
+    }
+
+    private void OnBaitCountChanged(int amount)
+    {
+        if (amount <= 0)
+        {
+            catchButton.interactable = false;
+            spinButton.interactable = false;
+            return;
+        }
+        
+        spinButton.interactable = true;
+    }
+
     public void StartSpinning()
     { 
         if (isSpinning) return;

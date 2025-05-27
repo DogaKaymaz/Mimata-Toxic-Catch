@@ -7,16 +7,6 @@ public class Sandal : MonoBehaviour
     [SerializeField] private CharacterMovement characterMovement;
 
     public Action<bool> PlayerNear;
-    private void Update()
-    {
-        if(!_isPlayerHere) return;
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            ChangeCamera.Instance.SetSeaCam();
-            if (characterMovement != null) characterMovement.canMove = false;
-        }
-    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {

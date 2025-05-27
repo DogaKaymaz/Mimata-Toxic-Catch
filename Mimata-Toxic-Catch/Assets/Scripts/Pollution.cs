@@ -21,6 +21,7 @@ public class Pollution : MonoBehaviour
     [SerializeField] private float pollutionIncreaseMax = 5f;
 
     public Action<float> PollutionIncreased;
+    public Action PollutionMaxed;
     private void Start()
     {
         timeManager.NewDayStarted += OnNewDayStarted;
@@ -29,7 +30,11 @@ public class Pollution : MonoBehaviour
 
     private void OnNewDayStarted()
     {
-        if (currentPollution >= 100f) return;
+        if (currentPollution >= 100f)
+        {
+            PollutionMaxed?.Invoke();
+            return;
+        }
         float randomIncrease = Random.Range(pollutionIncreaseMin, pollutionIncreaseMax);
         currentPollution += randomIncrease;
         InitializeUI();

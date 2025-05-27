@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -19,9 +20,18 @@ public class WheelUIManager : MonoBehaviour
     [SerializeField] private float junkRandomizerMin = 3f;
     [SerializeField] private float junkRandomizerMax = 10f;
 
+    [SerializeField] private string toxicGradient;
+    [SerializeField] private string junkGradient;
+    [SerializeField] private string safeGradient;
     private void Start()
     {
         pollution.PollutionIncreased += OnPollutionIncreased;
+        pollution.PollutionMaxed += OnPollutionMaxed;
+        OnPollutionIncreased(pollution.currentPollution);
+    }
+
+    private void OnPollutionMaxed()
+    {
         OnPollutionIncreased(pollution.currentPollution);
     }
 
@@ -33,7 +43,7 @@ public class WheelUIManager : MonoBehaviour
 
     public void InitializeUI(float toxicPercent, float junkPercent)
     {
-        float safePercent = Mathf.Min(100f - (toxicPercent + junkPercent), 0f);
+        float safePercent = Mathf.Max(Mathf.Min(100f - (toxicPercent + junkPercent), 0f), 0f);
 
         if (toxicPercent < 0 || junkPercent < 0 || safePercent < 0)
         {
@@ -57,23 +67,26 @@ public class WheelUIManager : MonoBehaviour
         
         indicator.StopSpinning();
         
+        CharacterBehaviour.Instance.AddBaitCount(-1);
         float angle = indicator.GetCurrentAngle();
         float normalized = Mathf.Repeat(angle, 180f);
 
         Debug.Log($"Indicator stopped at angle: {normalized}°");
         Debug.Log("safe angle " + _safeAngle);
-
+        
+        indicator.StopAllCoroutines();
+        indicator.StartCoroutine(indicator.Timer());
         if (normalized < _toxicAngle)
         {
-            Debug.Log("Caught: TOXIC");
+            indicator.SetCatchInfoText("<gradient=" + toxicGradient + ">" + "TOXIC");
         }
         else if (normalized < _toxicAngle + _junkAngle)
         {
-            Debug.Log("Caught: JUNK");
+            indicator.SetCatchInfoText("<gradient=" + junkGradient + ">" + "just a junk");
         }
         else
         {
-            Debug.Log("Caught: SAFE");
+            indicator.SetCatchInfoText("a safe and tasteful "+ "<gradient=" + safeGradient + ">" + "FISH");
         }
     }
 }
