@@ -17,8 +17,8 @@ public class Pollution : MonoBehaviour
     [Header("Mecha")]
     public float currentPollution = 0f;
     public float maxPollution = 100f;
-    [SerializeField] private float pollutionIncreaseMin = 1f;
-    [SerializeField] private float pollutionIncreaseMax = 5f;
+    [SerializeField] private float pollutionIncreaseMin = 10f;
+    [SerializeField] private float pollutionIncreaseMax = 25f;
 
     public Action<float> PollutionIncreased;
     public Action PollutionMaxed;

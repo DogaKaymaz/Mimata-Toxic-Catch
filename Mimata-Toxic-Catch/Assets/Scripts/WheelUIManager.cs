@@ -23,8 +23,11 @@ public class WheelUIManager : MonoBehaviour
     [SerializeField] private string toxicGradient;
     [SerializeField] private string junkGradient;
     [SerializeField] private string safeGradient;
+
+    private Inventory _inventory;
     private void Start()
     {
+        _inventory = GameManager.Instance.inventory;
         pollution.PollutionIncreased += OnPollutionIncreased;
         pollution.PollutionMaxed += OnPollutionMaxed;
         OnPollutionIncreased(pollution.currentPollution);
@@ -79,14 +82,17 @@ public class WheelUIManager : MonoBehaviour
         if (normalized < _toxicAngle)
         {
             indicator.SetCatchInfoText("<gradient=" + toxicGradient + ">" + "TOXIC");
+            _inventory.AddToxicCatch();
         }
         else if (normalized < _toxicAngle + _junkAngle)
         {
             indicator.SetCatchInfoText("<gradient=" + junkGradient + ">" + "just a junk");
+            _inventory.AddJunk();
         }
         else
         {
             indicator.SetCatchInfoText("a safe and tasteful "+ "<gradient=" + safeGradient + ">" + "FISH");
+            _inventory.AddSafeCatch();
         }
     }
 }
